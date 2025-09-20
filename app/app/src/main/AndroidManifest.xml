@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:label="ADF Medya Player"
         android:icon="@drawable/adf_logo"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        android:theme="@style/Theme.AdfMedya""
         android:usesCleartextTraffic="true">
 
         <!-- Açılış ekranı -->
