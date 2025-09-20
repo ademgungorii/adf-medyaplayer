@@ -22,14 +22,14 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Gradle and generate wrapper
+      - name: Install Gradle (SDKMAN) & generate wrapper
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install gradle 8.6
           gradle wrapper --gradle-version 8.6
 
-      - name: Install Android SDK packages
+      - name: Install SDK packages & accept licenses
         run: |
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
           yes | sdkmanager --licenses
@@ -37,10 +37,16 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Build debug APK
-        run: ./gradlew --no-daemon assembleDebug
+      # Teşhis için ortamı göster
+      - name: Show build environment
+        run: ./gradlew --version && ./gradlew buildEnvironment
 
-      - name: Upload APK artifact
+      # Temiz derleme ve ayrıntılı log
+      - name: Build debug APK (verbose)
+        run: ./gradlew --no-daemon clean assembleDebug --stacktrace --info
+
+      - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
