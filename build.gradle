@@ -1,7 +1,31 @@
-buildscript {
-    repositories { google(); mavenCentral() }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22'
-    }
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
+
+android {
+    namespace 'com.adfmedya.player'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.adfmedya.player"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // Gerekirse debug’a özel ayarlar
+        }
+    }
+
+    // ViewBinding kullanıyoruz (ActivityMainBinding vs.)
+    buildFeatures {
+        viewBinding true
+    }
